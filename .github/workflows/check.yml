@@ -1,0 +1,36 @@
+name: Check UPC Status
+on:
+  schedule:
+    - cron: '0 13,1 * * *' # UTC: 8 AM and 8 PM Peru time
+  workflow_dispatch: # Allows manual execution
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install chromium
+          playwright install-deps chromium
+
+      - name: Execute script
+        env:
+          UPC_USER: ${{ secrets.UPC_USER }}
+          UPC_PASS: ${{ secrets.UPC_PASS }}
+        run: python main.py
+
+      - name: Save Screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: status-report
+          path: status_tesis_*.png
+          retention-days: 7

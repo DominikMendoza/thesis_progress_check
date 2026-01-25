@@ -10,7 +10,7 @@ def run_automation():
         page = context.new_page()
         
         # 1. Login
-        page.goto("https://mistramites.upc.edu.pe/Autenticar/LoginUPC")
+        page.goto("https://mistramites.upc.edu.pe/Autenticar/LoginUPC", timeout=60000)
         page.fill("#usuario", os.getenv("UPC_USER"))
         page.fill("#password", os.getenv("UPC_PASS"))
         page.click("#btnLogin")
