@@ -1,6 +1,25 @@
 import os
+import requests
+
 from playwright.sync_api import sync_playwright
 from datetime import datetime
+
+
+# Function to send image to Telegram
+def send_to_telegram(image_path):
+    token = os.getenv("TELEGRAM_TOKEN")
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+    url = f"https://api.telegram.org/bot{token}/sendPhoto"
+    
+    with open(image_path, "rb") as photo:
+        files = {"photo": photo}
+        data = {
+            "chat_id": chat_id, 
+            "caption": f"✅ Reporte UPC - {datetime.now().strftime('%d/%m/%Y %H:%M')}"
+        }
+        response = requests.post(url, files=files, data=data)
+        if response.status_code != 200:
+            print(f"Error sending to Telegram: {response.text}")
 
 def run_automation():
     with sync_playwright() as p:
@@ -34,6 +53,9 @@ def run_automation():
         filename = f"status_tesis_{datetime.now().strftime('%Y%m%d')}.png"
         page.locator("section.col-md-9").screenshot(path=filename)
         
+        # 5. Send to Telegram
+        send_to_telegram(filename)
+
         context.close()
         browser.close()
 

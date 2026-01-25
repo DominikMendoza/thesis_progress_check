@@ -26,6 +26,8 @@ jobs:
         env:
           UPC_USER: ${{ secrets.UPC_USER }}
           UPC_PASS: ${{ secrets.UPC_PASS }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python main.py
 
       - name: Save Screenshot
