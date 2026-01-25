@@ -1,0 +1,7 @@
+# Python environment
+venv/
+.venv/
+env/
+
+# Screenshots
+*.png
