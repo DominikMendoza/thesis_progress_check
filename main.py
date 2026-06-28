@@ -24,7 +24,7 @@ def send_to_telegram(image_path):
 def run_automation():
     with sync_playwright() as p:
         # Browser configuration and resolution
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         context = browser.new_context(viewport={'width': 1920, 'height': 1080})
         page = context.new_page()
         
@@ -40,7 +40,7 @@ def run_automation():
         
         # 3. Access to specific process
         # Wait for the exact link text that triggers the 'onclick' event
-        link_tesis = 'a:has-text("Solicitud de Aprobación de Tema de Tesis")'
+        link_tesis = 'a:has-text("Copia certificada virtual")'
         page.wait_for_selector(link_tesis, state="visible")
         page.click(link_tesis)
         
