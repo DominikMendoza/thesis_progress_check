@@ -2,7 +2,7 @@ name: Check UPC Status
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 13,18,23 * * *"
 
 jobs:
   run-bot:
@@ -34,5 +34,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: status-report
-          path: status_tramite_*.png
+          path: status_tesis_*.png
           retention-days: 7

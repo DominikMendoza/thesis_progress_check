@@ -24,7 +24,7 @@ def send_to_telegram(image_path):
 def run_automation():
     with sync_playwright() as p:
         # Browser configuration and resolution
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=True)
         context = browser.new_context(viewport={'width': 1920, 'height': 1080})
         page = context.new_page()
         
